@@ -15,7 +15,6 @@
 		
 		$link = mysql_connect($host, $user, $pass);
 		mysql_select_db($db_name) or die('dbye baglanamadi');
-		//sets encoding to utf8
 		mysql_query("SET NAMES utf8");
 	}
 	
@@ -106,7 +105,52 @@
 		
 		break;
 		
-	}
+		case "musteri_sil":
+			connect_db();
+			$id = $_POST['id'];
+			
+			if (mysql_query("DELETE FROM musteriler WHERE id='$id'"))
+			{
+				echo 1;
+			}
+			else
+			{
+				echo 0;
+			}
+		break;
+		
+		case "hesapDurumuToggle":
+			connect_db();
+			$id = $_POST['id'];
+			$getQuery = mysql_query("SELECT hesap_durumu FROM musteriler WHERE id='$id'");
+			$kisi = mysql_fetch_object($getQuery);
+			
+			if ($kisi->hesap_durumu == 0)
+			{
+				if (mysql_query("UPDATE musteriler SET hesap_durumu='1' WHERE id='$id'"))
+				{
+					echo 1;
+				}
+				else
+				{
+					echo "hesap kapaliydi.. acilirken sorun olustu";
+				}
+			}
+			else
+			{
+				if (mysql_query("UPDATE musteriler SET hesap_durumu='0' WHERE id='$id'"))
+				{
+					echo 0;
+				}
+				else
+				{
+					echo "hesap acikti.. kapanirken sorun olustu";
+				}
+			}
+			
+		break;
+		
+	} // SWITCH / CASE end
 	
 
 

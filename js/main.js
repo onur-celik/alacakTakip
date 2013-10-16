@@ -118,6 +118,7 @@ function generateUI(kisi)
 	$('#UI_telefon').text(kisi.telefon);
 	$('#UI_id').text(kisi.id);
 	$('#UI_btn_musteri_sil').attr('onclick', 'musteri.sil('+kisi.id+');');
+	$('#UI_btn_hesap_durumu').attr('onclick', 'musteri.hesapDurumuToggle('+kisi.id+');');
 	if (kisi.hesap_durumu == 1)
 	{
 		$('#UI_hesap_durumu').text('AÇIK');
@@ -138,14 +139,39 @@ var musteri =
 			id : id
 		}
 		
-		var confirm = alert('hede');
-		
-		if (confirm)
+		if (confirm('Müşteriyi silmek istediğinizden emin misiniz?'))
 		{
 			$.post('php_functions.php', params, function(resp){
-				console.log(resp);
+				if (resp == '1')
+				{
+					alert('Müşteri Başarıyla Silindi!.');
+					location.href = "index.php";
+				}
+				else
+				{
+					alert('Silme İşlemi Sırasında Bir Hata Oluştu!.');
+				}
 			});	
+		}	
+	},
+	
+	hesapDurumuToggle : function(id)
+	{
+		var params = 
+		{
+			duty : 'hesapDurumuToggle',
+			id : id
 		}
 		
-	}
+		$.post('php_functions.php', params, function(resp){
+			if (resp == 1)
+			{
+				$('#UI_hesap_durumu').text('AÇIK');
+			}
+			else
+			{
+				$('#UI_hesap_durumu').text('KAPALI');
+			}
+		});
+	},
 }

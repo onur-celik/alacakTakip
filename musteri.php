@@ -35,8 +35,8 @@
 			<button class="btn btn-xs btn-success">
 				<i class="glyphicon glyphicon-plus"></i> Ödeme Ekle
 			</button>
-			<button class="btn btn-xs btn-primary">
-				<i class="glyphicon glyphicon-ok"></i> Hesabı Kapat
+			<button class="btn btn-xs btn-primary" id="UI_btn_hesap_durumu">
+				<i class="glyphicon glyphicon-ok"></i> Hesabı Aç / Kapat
 			</button>
 			<br />
 			<br />

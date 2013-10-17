@@ -166,6 +166,7 @@ function generateTable(paraAkisi)
 	});
 	
 	
+	
 	$('#UI_bakiye_tutar').empty().text(bakiye + ' TL');
 }
 

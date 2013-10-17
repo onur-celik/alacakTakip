@@ -12,6 +12,8 @@
 			
 			var alacakVerecekBilgileri = <?php echo get_alacakVerecek_bilgileri($id); ?>;
 			generateTable(JSON.stringify(alacakVerecekBilgileri));
+			
+			$('#alacak_ekle, #odeme_ekle').hide();
 		});
 	</script>
 	
@@ -30,10 +32,10 @@
 			<strong>Hesap Durumu : </strong> <span class="badge" id="UI_hesap_durumu"></span>
 			<br />
 			<br />
-			<button class="btn btn-xs btn-warning">
+			<button class="btn btn-xs btn-warning" id="UI_btn_alacak_ekle">
 				<i class="glyphicon glyphicon-minus"></i> Alacak Ekle
 			</button>
-			<button class="btn btn-xs btn-success">
+			<button class="btn btn-xs btn-success" id="UI_btn_odeme_ekle">
 				<i class="glyphicon glyphicon-plus"></i> Ödeme Ekle
 			</button>
 			<button class="btn btn-xs btn-primary" id="UI_btn_hesap_durumu">
@@ -41,7 +43,7 @@
 			</button>
 			<br />
 			<br />
-			<button class="btn btn-xs btn-default">
+			<button class="btn btn-xs btn-default" id="UI_btn_bilgileri_guncelle">
 				<i class="glyphicon glyphicon-pencil"></i> Müşteri Bilgilerini Güncelle
 			</button>
 			<button class="btn btn-xs btn-danger" id="UI_btn_musteri_sil">
@@ -62,23 +64,44 @@
 					</tr>
 				</thead>
 				<tbody>
-					
+					<!-- database den geliyor... -->
 				</tbody>
 				<tfoot>
 					<tr class="warning">
-						<th colspan="2">
-							Bakiye :
-						</th>
-						<th colspan="2" id="UI_bakiye_tutar">
-							500 TL
-						</th>
+						<th colspan="2">Bakiye :</th>
+						<th colspan="2" id="UI_bakiye_tutar"></th>
 					</tr>
 				</tfoot>
 			</table>
 		</div>
 	</div>
 	
+	<div id="alacak_ekle">
+		Tarih : 
+		<input type="text" class="form-control"/>
+		Açıklama :
+		<input type="text" class="form-control"/>
+		Tutar : 
+		<input type="text" class="form-control"/>
+		<br />
+		<button class="btn btn-xs btn-warning">
+			<i class="glyphicon glyphicon-minus"></i> Alacak Ekle
+		</button>
+			
+	</div>
 	
+	<div id="odeme_ekle">
+		Tarih : 
+		<input type="text" class="form-control"/>
+		Açıklama :
+		<input type="text" class="form-control"/>
+		Tutar : 
+		<input type="text" class="form-control"/>
+		<br />
+		<button class="btn btn-xs btn-success">
+			<i class="glyphicon glyphicon-plus"></i> Ödeme Ekle
+		</button>
+	</div>
 	
 	
 <?php include "footer.php"; ?>

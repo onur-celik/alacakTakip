@@ -119,6 +119,10 @@ function generateUI(kisi)
 	$('#UI_id').text(kisi.id);
 	$('#UI_btn_musteri_sil').attr('onclick', 'musteri.sil('+kisi.id+');');
 	$('#UI_btn_hesap_durumu').attr('onclick', 'musteri.hesapDurumuToggle('+kisi.id+');');
+	$('#UI_btn_alacak_ekle').attr('onclick', 'musteri.alacakEkle('+kisi.id+');');
+	$('#UI_btn_odeme_ekle').attr('onclick', 'musteri.odemeEkle('+kisi.id+');');
+	$('#UI_btn_bilgileri_guncelle').attr('onclick', 'musteri.bilgileriGuncelle('+kisi.id+');');
+	
 	if (kisi.hesap_durumu == 1)
 	{
 		$('#UI_hesap_durumu').text('AÇIK');
@@ -143,8 +147,8 @@ function generateTable(paraAkisi)
 							'<td>'+$this.aciklama+'</td>'+
 							'<td width="150">'+$this.tutar+' TL</td>'+
 							'<td width="100">'+
-							'<button class="btn btn-xs btn-default"><i class="glyphicon glyphicon-pencil"></i></button>'+
-							'<button class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-remove"></i></button>'+
+							'<button class="btn btn-xs btn-default" onclick="musteri.islem.duzenle('+$this.id+');"><i class="glyphicon glyphicon-pencil"></i></button>'+
+							'<button class="btn btn-xs btn-danger" onclick="musteri.islem.sil('+$this.id+');"><i class="glyphicon glyphicon-remove"></i></button>'+
 							'</td>'+
 						'</tr>';
 			$('table#islemler tbody').append(tmpl);
@@ -157,8 +161,8 @@ function generateTable(paraAkisi)
 							'<td>'+$this.aciklama+'</td>'+
 							'<td>'+$this.tutar+' TL</td>'+
 							'<td width="100">'+
-							'<button class="btn btn-xs btn-default"><i class="glyphicon glyphicon-pencil"></i></button>'+
-							'<button class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-remove"></i></button>'+
+							'<button class="btn btn-xs btn-default" onclick="musteri.islem.duzenle('+$this.id+');"><i class="glyphicon glyphicon-pencil"></i></button>'+
+							'<button class="btn btn-xs btn-danger" onclick="musteri.islem.sil('+$this.id+');"><i class="glyphicon glyphicon-remove"></i></button>'+
 							'</td>'+
 						'</tr>';
 			$('table#islemler tbody').append(tmpl);
@@ -215,4 +219,37 @@ var musteri =
 			}
 		});
 	},
+	
+	alacakEkle : function($musteri_id)
+	{
+		$.fancybox.showLoading();
+		$.fancybox( {href : '#alacak_ekle'} );
+	},
+	
+	odemeEkle : function($musteri_id)
+	{
+		$.fancybox.showLoading();
+		$.fancybox( {href : '#odeme_ekle'} );
+	},
+	
+	bilgileriGuncelle : function($musteri_id)
+	{
+		$.fancybox.showLoading();
+	},
+	
+	islem : 
+	{
+		duzenle : function($islem_id)
+		{
+			console.log($islem_id);
+		},
+		
+		sil : function($islem_id)
+		{
+			if (confirm('İşlem kaydını silmek istediğinizden emin misiniz?'))
+			{
+				alert('İşlem kaydı başarıyla silindi!.');	
+			}
+		},
+	}
 }

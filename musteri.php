@@ -4,13 +4,14 @@
 	
 	$id = $_GET['id'];
 	
-	
-	
 ?>
 	<script>
 		$(function(){
 			var musteriBilgileri = <?php echo get_musteri_bilgileri($id); ?>;
 			generateUI(JSON.stringify(musteriBilgileri));
+			
+			var alacakVerecekBilgileri = <?php echo get_alacakVerecek_bilgileri($id); ?>;
+			generateTable(JSON.stringify(alacakVerecekBilgileri));
 		});
 	</script>
 	
@@ -51,7 +52,7 @@
 	
 	<div class="row">
 		<div class="col-sm-12 col-lg-12">
-			<table class="table table-bordered table-striped table-hover">
+			<table class="table table-bordered table-striped table-hover" id="islemler">
 				<thead>
 					<tr>
 						<th>Tarih</th>
@@ -61,40 +62,14 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="danger">
-						<td>21-02-2013</td>
-						<td>Cam Balkon</td>
-						<td>1500 TL</td>
-						<td width="100">
-							<button class="btn btn-xs btn-default"><i class="glyphicon glyphicon-pencil"></i></button>
-							<button class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-remove"></i></button>
-						</td>
-					</tr>
-					<tr class="success">
-						<td>23-02-2013</td>
-						<td>Nesrine Ödenen</td>
-						<td>500 TL</td>
-						<td>
-							<button class="btn btn-xs btn-default"><i class="glyphicon glyphicon-pencil"></i></button>
-							<button class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-remove"></i></button>
-						</td>
-					</tr>
-					<tr class="success">
-						<td>23-02-2013</td>
-						<td>Ayşeye Ödenen</td>
-						<td>500 TL</td>
-						<td>
-							<button class="btn btn-xs btn-default"><i class="glyphicon glyphicon-pencil"></i></button>
-							<button class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-remove"></i></button>
-						</td>
-					</tr>
+					
 				</tbody>
 				<tfoot>
 					<tr class="warning">
 						<th colspan="2">
 							Bakiye :
 						</th>
-						<th colspan="2">
+						<th colspan="2" id="UI_bakiye_tutar">
 							500 TL
 						</th>
 					</tr>

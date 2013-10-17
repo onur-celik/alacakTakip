@@ -189,6 +189,30 @@ function get_musteri_bilgileri($id)
 	
 	echo json_encode($kisi);
 }
+
+function get_alacakVerecek_bilgileri($id)
+{
+	connect_db();
 	
+	$msquery = mysql_query("SELECT * FROM islemler WHERE musteri_id='$id'");
+	
+	$butunAkis = array();
+	
+	while($paraAkisi = mysql_fetch_object($msquery))
+	{
+		$akis = array(
+			id => $paraAkisi->id,
+			tarih => $paraAkisi->tarih,
+			aciklama => $paraAkisi->aciklama,
+			tutar => $paraAkisi->tutar,
+			tip => $paraAkisi->tip
+		);
+		
+		array_push($butunAkis, $akis);
+	}
+	
+	echo json_encode($butunAkis);
+		
+}	
 	
 ?>

@@ -129,6 +129,45 @@ function generateUI(kisi)
 	}
 }
 
+function generateTable(paraAkisi)
+{
+	var akis = $.parseJSON(paraAkisi);
+	var bakiye = 0;
+	$.each(akis, function(k,v)
+	{
+		$this = $(v)[0];
+		if ($this.tip == 1){
+			bakiye -= parseInt($this.tutar);
+			var tmpl = '<tr class="success">'+
+							'<td width="150">'+$this.tarih+'</td>'+
+							'<td>'+$this.aciklama+'</td>'+
+							'<td width="150">'+$this.tutar+' TL</td>'+
+							'<td width="100">'+
+							'<button class="btn btn-xs btn-default"><i class="glyphicon glyphicon-pencil"></i></button>'+
+							'<button class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-remove"></i></button>'+
+							'</td>'+
+						'</tr>';
+			$('table#islemler tbody').append(tmpl);
+		}
+		else
+		{
+			bakiye += parseInt($this.tutar);
+			var tmpl = '<tr class="danger">'+
+							'<td>'+$this.tarih+'</td>'+
+							'<td>'+$this.aciklama+'</td>'+
+							'<td>'+$this.tutar+' TL</td>'+
+							'<td width="100">'+
+							'<button class="btn btn-xs btn-default"><i class="glyphicon glyphicon-pencil"></i></button>'+
+							'<button class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-remove"></i></button>'+
+							'</td>'+
+						'</tr>';
+			$('table#islemler tbody').append(tmpl);
+		}
+	});
+	
+	$('#UI_bakiye_tutar').empty().text(bakiye + ' TL');
+}
+
 var musteri = 
 {
 	sil : function(id)

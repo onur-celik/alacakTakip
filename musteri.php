@@ -3,7 +3,11 @@
 	sessionCtrl();
 	
 	$id = $_GET['id'];
-	
+	 
+    /*
+print_r( getdate() );
+    echo mktime();
+*/
 ?>
 	<script>
 		$(function(){
@@ -13,7 +17,7 @@
 			var alacakVerecekBilgileri = <?php echo get_alacakVerecek_bilgileri($id); ?>;
 			generateTable(JSON.stringify(alacakVerecekBilgileri));
 			
-			$('#alacak_ekle, #odeme_ekle').hide();
+			$('#alacak_ekle, #odeme_ekle, #bilgileri_guncelle, #islem_kaydi_guncelle').hide();
 		});
 	</script>
 	
@@ -78,13 +82,13 @@
 	
 	<div id="alacak_ekle">
 		Tarih : 
-		<input type="text" class="form-control"/>
+		<input type="text" class="form-control" id="tarih"/>
 		Açıklama :
-		<input type="text" class="form-control"/>
+		<input type="text" class="form-control" id="aciklama"/>
 		Tutar : 
-		<input type="text" class="form-control"/>
+		<input type="text" class="form-control" id="tutar"/>
 		<br />
-		<button class="btn btn-xs btn-warning">
+		<button class="btn btn-xs btn-warning" id="UI_btn_alacak_ekle_kaydet">
 			<i class="glyphicon glyphicon-minus"></i> Alacak Ekle
 		</button>
 			
@@ -92,14 +96,45 @@
 	
 	<div id="odeme_ekle">
 		Tarih : 
-		<input type="text" class="form-control"/>
+		<input type="text" class="form-control" id="tarih"/>
 		Açıklama :
-		<input type="text" class="form-control"/>
+		<input type="text" class="form-control" id="aciklama"/>
 		Tutar : 
-		<input type="text" class="form-control"/>
+		<input type="text" class="form-control" id="tutar"/>
 		<br />
-		<button class="btn btn-xs btn-success">
+		<button class="btn btn-xs btn-success" id="UI_btn_odeme_ekle_kaydet">
 			<i class="glyphicon glyphicon-plus"></i> Ödeme Ekle
+		</button>
+	</div>
+	
+	<div id="islem_kaydi_guncelle">
+		Tarih : 
+		<input type="text" class="form-control" id="tarih"/>
+		Açıklama :
+		<input type="text" class="form-control" id="aciklama"/>
+		Tutar : 
+		<input type="text" class="form-control" id="tutar"/>	
+		Tip :
+		<select id="tip" class="form-control">
+			<option value="0">Alacak</option>
+			<option value="1">Ödeme</option>
+		</select>
+		<br />
+		<button class="btn btn-xs btn-success" id="UI_btn_islem_kaydi_guncelle_kaydet">
+			<i class="glyphicon glyphicon-ok"></i> Güncelle
+		</button>
+	</div>
+	
+	<div id="bilgileri_guncelle" style="width:400px;">
+		İsim Soyisim : 
+		<input type="text" class="form-control" id="bg_isimsoyisim"/>
+		Adres :
+		<textarea id="bg_adres" class="form-control"></textarea>
+		Telefon : 
+		<input type="text" class="form-control" id="bg_telefon"/>
+		<br />
+		<button class="btn btn-xs btn-success" id="UI_btn_bilgi_guncelle_kaydet">
+			<i class="glyphicon glyphicon-ok"></i> Güncelle
 		</button>
 	</div>
 	

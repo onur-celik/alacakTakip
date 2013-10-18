@@ -1,3 +1,6 @@
+//vars
+var postUrl = 'php_functions.php';
+
 /* DOCUMENT READY */
 $(function(){
 	
@@ -5,6 +8,8 @@ $(function(){
 		
 });
 /* DOCUMENT READY END */
+
+
 
 
 function login()
@@ -17,7 +22,7 @@ function login()
 		password 	: pass 
 	}
 	
-	$.post('php_functions.php', params, function(resp){
+	$.post(postUrl, params, function(resp){
 		if (resp == 'success')
 		{
 			location.href = 'index.php';
@@ -36,7 +41,7 @@ function logout()
 		duty 		: 'logout'
 	}
 	
-	$.post('php_functions.php', params, function(resp){
+	$.post(postUrl, params, function(resp){
 		if (resp == 'success')
 		{
 			location.href = 'login.php';
@@ -62,7 +67,7 @@ function arama()
 			query	: query
 		}		
 		
-		$.post('php_functions.php', params, function(resp){
+		$.post(postUrl, params, function(resp){
 			console.log($.parseJSON(resp));
 			arama_goster($.parseJSON(resp));
 		});
@@ -76,7 +81,7 @@ function arama()
 			query	: query
 		}		
 		
-		$.post('php_functions.php', params, function(resp){
+		$.post(postUrl, params, function(resp){
 			console.log($.parseJSON(resp));
 			arama_goster($.parseJSON(resp));
 		});
@@ -122,6 +127,9 @@ function generateUI(kisi)
 	$('#UI_btn_alacak_ekle').attr('onclick', 'musteri.alacakEkle('+kisi.id+');');
 	$('#UI_btn_odeme_ekle').attr('onclick', 'musteri.odemeEkle('+kisi.id+');');
 	$('#UI_btn_bilgileri_guncelle').attr('onclick', 'musteri.bilgileriGuncelle('+kisi.id+');');
+	$('#UI_btn_alacak_ekle_kaydet').attr('onclick', 'musteri.alacakEkle_kaydet('+kisi.id+');');
+	$('#UI_btn_odeme_ekle_kaydet').attr('onclick', 'musteri.odemeEkle_kaydet('+kisi.id+');');
+	$('#UI_btn_bilgileri_guncelle_kaydet').attr('onclick', 'musteri.bilgileriGuncelle_kaydet('+kisi.id+');');
 	
 	if (kisi.hesap_durumu == 1)
 	{
@@ -143,12 +151,12 @@ function generateTable(paraAkisi)
 		if ($this.tip == 1){
 			bakiye -= parseInt($this.tutar);
 			var tmpl = '<tr class="success">'+
-							'<td width="150">'+$this.tarih+'</td>'+
-							'<td>'+$this.aciklama+'</td>'+
-							'<td width="150">'+$this.tutar+' TL</td>'+
-							'<td width="100">'+
+							'<td width="120">'+$this.tarih+'</td>'+
+							'<td><strong>'+$this.aciklama+'</strong></td>'+
+							'<td width="110">'+$this.tutar+' TL</td>'+
+							'<td width="80" class="text-center">'+
 							'<button class="btn btn-xs btn-default" onclick="musteri.islem.duzenle('+$this.id+');"><i class="glyphicon glyphicon-pencil"></i></button>'+
-							'<button class="btn btn-xs btn-danger" onclick="musteri.islem.sil('+$this.id+');"><i class="glyphicon glyphicon-remove"></i></button>'+
+							' <button class="btn btn-xs btn-default" onclick="musteri.islem.sil('+$this.id+');"><i class="glyphicon glyphicon-remove"></i></button>'+
 							'</td>'+
 						'</tr>';
 			$('table#islemler tbody').append(tmpl);
@@ -157,12 +165,12 @@ function generateTable(paraAkisi)
 		{
 			bakiye += parseInt($this.tutar);
 			var tmpl = '<tr class="danger">'+
-							'<td>'+$this.tarih+'</td>'+
-							'<td>'+$this.aciklama+'</td>'+
-							'<td>'+$this.tutar+' TL</td>'+
-							'<td width="100">'+
+							'<td width="120">'+$this.tarih+'</td>'+
+							'<td><strong>'+$this.aciklama+'</strong></td>'+
+							'<td width="110">'+$this.tutar+' TL</td>'+
+							'<td width="80" class="text-center">'+
 							'<button class="btn btn-xs btn-default" onclick="musteri.islem.duzenle('+$this.id+');"><i class="glyphicon glyphicon-pencil"></i></button>'+
-							'<button class="btn btn-xs btn-danger" onclick="musteri.islem.sil('+$this.id+');"><i class="glyphicon glyphicon-remove"></i></button>'+
+							' <button class="btn btn-xs btn-default" onclick="musteri.islem.sil('+$this.id+');"><i class="glyphicon glyphicon-remove"></i></button>'+
 							'</td>'+
 						'</tr>';
 			$('table#islemler tbody').append(tmpl);
@@ -186,7 +194,7 @@ var musteri =
 		
 		if (confirm('Müşteriyi silmek istediğinizden emin misiniz?'))
 		{
-			$.post('php_functions.php', params, function(resp){
+			$.post(postUrl, params, function(resp){
 				if (resp == '1')
 				{
 					alert('Müşteri Başarıyla Silindi!.');
@@ -208,7 +216,7 @@ var musteri =
 			id : id
 		}
 		
-		$.post('php_functions.php', params, function(resp){
+		$.post(postUrl, params, function(resp){
 			if (resp == 1)
 			{
 				$('#UI_hesap_durumu').text('AÇIK');
@@ -220,35 +228,170 @@ var musteri =
 		});
 	},
 	
-	alacakEkle : function($musteri_id)
+	alacakEkle : function(musteri_id)
 	{
 		$.fancybox.showLoading();
 		$.fancybox( {href : '#alacak_ekle'} );
 	},
 	
-	odemeEkle : function($musteri_id)
+	alacakEkle_kaydet : function(musteri_id)
+	{
+		params = 
+		{
+			duty : 'alacak_ekle',
+			id : musteri_id,
+			tarih : $('#alacak_ekle #tarih').val() ,
+			aciklama : $('#alacak_ekle #aciklama').val() ,
+			tutar : $('#alacak_ekle #tutar').val()
+		}
+		
+		$.post(postUrl, params, function(resp){
+			if (resp == 1)
+			{
+				alert('Alacak bilgisi başarıyla eklendi!');
+				location.reload();
+			}
+			else
+			{
+				alert('Alacak bilgisi eklenirken bir hata oluştu!.');
+			}
+		});
+	},
+	
+	odemeEkle : function(musteri_id)
 	{
 		$.fancybox.showLoading();
 		$.fancybox( {href : '#odeme_ekle'} );
 	},
 	
-	bilgileriGuncelle : function($musteri_id)
+	odemeEkle_kaydet : function(musteri_id)
+	{
+		params = 
+		{
+			duty : 'odeme_ekle',
+			id : musteri_id,
+			tarih : $('#odeme_ekle #tarih').val() ,
+			aciklama : $('#odeme_ekle #aciklama').val() ,
+			tutar : $('#odeme_ekle #tutar').val()
+		}
+		
+		$.post(postUrl, params, function(resp){
+			if (resp == 1)
+			{
+				alert('Ödeme bilgisi başarıyla eklendi!');
+				location.reload();
+			}
+			else
+			{
+				alert('Ödeme bilgisi eklenirken bir hata oluştu!.');
+			}
+		});
+	},
+	
+	bilgileriGuncelle : function(musteri_id)
 	{
 		$.fancybox.showLoading();
+		$.fancybox( {href : '#bilgileri_guncelle'} );
+		var params =
+		{
+			duty : 'musteri_bilgilerini_guncelle',
+			id : musteri_id
+		};
+		
+		$.post(postUrl, params, function(resp){
+			var kisi = $.parseJSON(resp);
+			
+			$('#bg_isimsoyisim').val(kisi.isimsoyisim);
+			$('#bg_adres').text(kisi.adres);
+			$('#bg_telefon').val(kisi.telefon);
+		});
+	},
+	
+	bilgileriGuncelle_kaydet : function(musteri_id)
+	{
+		
 	},
 	
 	islem : 
 	{
-		duzenle : function($islem_id)
+		duzenle : function(islem_id)
 		{
-			console.log($islem_id);
+			$.fancybox.showLoading();
+			$.fancybox( {href : '#islem_kaydi_guncelle'} );
+			$('#UI_btn_islem_kaydi_guncelle_kaydet').attr('onclick', 'musteri.islem.guncelle('+islem_id+');');
+			
+			var params = 
+			{
+				duty 	: 'islem_kaydi_duzenle',
+				id 		: islem_id
+			}
+			
+			$.post(postUrl, params, function(resp){
+				var islem = $.parseJSON(resp);
+				$('#islem_kaydi_guncelle #tarih').val(islem.tarih);
+				$('#islem_kaydi_guncelle #aciklama').val(islem.aciklama);
+				$('#islem_kaydi_guncelle #tutar').val(islem.tutar);
+				
+				if (islem.tip == '0')
+				{	
+					$('#islem_kaydi_guncelle #tip option[value="1"]').prop('selected', false);
+					$('#islem_kaydi_guncelle #tip option[value="0"]').prop('selected', true);
+				}
+				else
+				{	
+					$('#islem_kaydi_guncelle #tip option[value="0"]').prop('selected', false);
+					$('#islem_kaydi_guncelle #tip option[value="1"]').prop('selected', true);
+				}
+			});
 		},
 		
-		sil : function($islem_id)
+		guncelle : function(islem_id)
+		{
+			var params = 
+			{
+				duty 	: 'islem_kaydi_guncelle',
+				id 		: islem_id,
+				tarih	: $('#islem_kaydi_guncelle #tarih').val(),
+				aciklama: $('#islem_kaydi_guncelle #aciklama').val(),
+				tutar	: $('#islem_kaydi_guncelle #tutar').val(),
+				tip		: $('#islem_kaydi_guncelle #tip option:selected').val()
+			}
+			
+			$.post(postUrl, params, function(resp){
+				if (resp == 1)
+				{
+					alert('İşlem kaydı başarıyla güncellendi!.');
+					location.reload();
+				}
+				else
+				{
+					alert('İşlem kaydı güncellenirken bir hata oluştu!.');
+				}
+			});
+		},
+		
+		sil : function(islem_id)
 		{
 			if (confirm('İşlem kaydını silmek istediğinizden emin misiniz?'))
 			{
-				alert('İşlem kaydı başarıyla silindi!.');	
+				var params =
+				{
+					duty : 'islem_kaydi_sil',
+					id : islem_id
+				}
+				
+				$.post(postUrl, params, function(resp){
+					if (resp == 1)
+					{
+						alert('İşlem kaydı başarıyla silindi!.');
+						location.reload();
+					}
+					else
+					{
+						alert('İşlem kaydı silinirken bir hata oluştu!.');	
+					}
+				});
+				
 			}
 		},
 	}

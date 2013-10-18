@@ -150,6 +150,113 @@
 			
 		break;
 		
+		case "musteri_bilgilerini_guncelle":
+			connect_db();
+			$id = $_POST['id'];
+			
+			$msquery = mysql_query("SELECT * FROM musteriler WHERE id='$id'");
+			$kisi = mysql_fetch_object($msquery);
+			
+			$bilgiler = array(
+				isimsoyisim => $kisi->isimsoyisim,
+				adres => $kisi->adres,
+				telefon => $kisi->telefon
+			);
+			
+			echo json_encode($bilgiler);
+			
+		break;
+		
+		case "alacak_ekle":
+			connect_db();
+			
+			$id 		= $_POST['id'];
+			$tarih 		= $_POST['tarih'];
+			$aciklama	= $_POST['aciklama'];
+			$tutar		= $_POST['tutar'];
+			$tip		= 0;
+			
+			if (mysql_query("INSERT INTO islemler VALUES ('', '$id', '$tarih', '$aciklama', '$tutar', '$tip')"))
+			{
+				echo 1;
+			}
+			else
+			{
+				echo 0;
+			}
+		break;
+		
+		case "odeme_ekle":
+			connect_db();
+			
+			$id 		= $_POST['id'];
+			$tarih 		= $_POST['tarih'];
+			$aciklama	= $_POST['aciklama'];
+			$tutar		= $_POST['tutar'];
+			$tip		= 1;
+			
+			if (mysql_query("INSERT INTO islemler VALUES ('', '$id', '$tarih', '$aciklama', '$tutar', '$tip')"))
+			{
+				echo 1;
+			}
+			else
+			{
+				echo 0;
+			}
+		break;
+		
+		case "islem_kaydi_sil":
+			connect_db();
+			$id = $_POST['id'];
+			if (mysql_query("DELETE FROM islemler WHERE id='$id'"))
+			{
+				echo 1;
+			}
+			else
+			{
+				echo 0;
+			}
+		break;
+		
+		case "islem_kaydi_duzenle":
+			connect_db();
+			$id = $_POST['id'];
+			
+			$msquery = mysql_query("SELECT * FROM islemler WHERE id='$id'");
+			
+			$islem = mysql_fetch_object($msquery);
+			
+			$islemArr = array(
+				tarih => $islem->tarih,
+				aciklama => $islem->aciklama,
+				tutar => $islem->tutar,
+				tip => $islem->tip
+			);
+			
+			echo json_encode($islemArr);
+			
+		break;
+		
+		case "islem_kaydi_guncelle":
+			connect_db();
+			
+			$id 		= $_POST['id'];
+			$tarih		= $_POST['tarih'];
+			$aciklama	= $_POST['aciklama'];
+			$tutar		= $_POST['tutar'];
+			$tip		= $_POST['tip'];
+
+			if (mysql_query("UPDATE islemler SET tarih='$tarih', aciklama='$aciklama', tutar='$tutar', tip='$tip' WHERE id='$id' "))
+			{
+				echo 1;
+			}
+			else
+			{
+				echo 0;
+			}
+			
+		break;
+		
 	} // SWITCH / CASE end
 	
 
@@ -194,7 +301,7 @@ function get_alacakVerecek_bilgileri($id)
 {
 	connect_db();
 	
-	$msquery = mysql_query("SELECT * FROM islemler WHERE musteri_id='$id'");
+	$msquery = mysql_query("SELECT * FROM islemler WHERE musteri_id='$id' ORDER BY tarih ASC");
 	
 	$butunAkis = array();
 	

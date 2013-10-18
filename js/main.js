@@ -4,6 +4,9 @@ var postUrl = 'php_functions.php';
 /* DOCUMENT READY */
 $(function(){
 	
+	getTotalMusteri();
+	getAcikHesaplar();
+	getKapaliHesaplar();
 		
 		
 });
@@ -68,7 +71,6 @@ function arama()
 		}		
 		
 		$.post(postUrl, params, function(resp){
-			console.log($.parseJSON(resp));
 			arama_goster($.parseJSON(resp));
 		});
 	}
@@ -82,7 +84,6 @@ function arama()
 		}		
 		
 		$.post(postUrl, params, function(resp){
-			console.log($.parseJSON(resp));
 			arama_goster($.parseJSON(resp));
 		});
 	}
@@ -395,4 +396,45 @@ var musteri =
 			}
 		},
 	}
+}
+
+
+
+function getTotalMusteri()
+{
+	var params = 
+	{
+		duty : 'getTotalMusteri'
+	}
+	
+	$.post(postUrl, params, function(resp)
+	{
+		$('span#total_musteri').text(resp);
+	});
+}
+
+function getAcikHesaplar()
+{
+	var params = 
+	{
+		duty : 'getAcikHesaplar'
+	}
+	
+	$.post(postUrl, params, function(resp)
+	{
+		$('span#acik_hesaplar').text(resp);
+	});
+}
+
+function getKapaliHesaplar()
+{
+	var params = 
+	{
+		duty : 'getKapaliHesaplar'
+	}
+	
+	$.post(postUrl, params, function(resp)
+	{
+		$('span#kapali_hesaplar').text(resp);
+	});
 }

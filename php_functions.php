@@ -257,6 +257,27 @@
 			
 		break;
 		
+		case "getTotalMusteri":
+			connect_db();
+			$msquery = mysql_query("SELECT * FROM musteriler");
+			$total = mysql_num_rows($msquery);
+			echo $total;
+		break;
+		
+		case "getAcikHesaplar":
+			connect_db();
+			$msquery = mysql_query("SELECT * FROM musteriler WHERE hesap_durumu='1'");
+			$total = mysql_num_rows($msquery);
+			echo $total;
+		break;
+		
+		case "getKapaliHesaplar":
+			connect_db();
+			$msquery = mysql_query("SELECT * FROM musteriler WHERE hesap_durumu='0'");
+			$total = mysql_num_rows($msquery);
+			echo $total;
+		break;
+		
 	} // SWITCH / CASE end
 	
 

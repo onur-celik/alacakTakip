@@ -150,6 +150,23 @@
 			
 		break;
 		
+		case "musteri_ekle":
+			connect_db();
+			$isimsoyisim 	= $_POST['isimsoyisim'];
+			$adres 			= $_POST['adres'];
+			$telefon 		= $_POST['telefon'];
+			
+			if ($msquery = mysql_query("INSERT INTO musteriler VALUES('', '$isimsoyisim', '$adres', '$telefon', '0')"))
+			{
+				echo 1;
+			}
+			else
+			{
+				echo 0;
+			}
+			
+		break;
+		
 		case "musteri_bilgilerini_guncelle":
 			connect_db();
 			$id = $_POST['id'];
@@ -164,6 +181,24 @@
 			);
 			
 			echo json_encode($bilgiler);
+			
+		break;
+		
+		case "musteri_bilgi_guncelle_kaydet":
+			connect_db();
+			$id 			= $_POST['id'];
+			$isimsoyisim 	= $_POST['isimsoyisim'];
+			$adres 			= $_POST['adres'];
+			$telefon 		= $_POST['telefon'];
+			
+			if($msquery = mysql_query("UPDATE musteriler SET isimsoyisim='$isimsoyisim', adres='$adres', telefon='$telefon' WHERE id='$id' "))
+			{
+				echo 1;
+			}
+			else
+			{
+				echo 0;
+			}
 			
 		break;
 		

@@ -130,7 +130,7 @@ function generateUI(kisi)
 	$('#UI_btn_bilgileri_guncelle').attr('onclick', 'musteri.bilgileriGuncelle('+kisi.id+');');
 	$('#UI_btn_alacak_ekle_kaydet').attr('onclick', 'musteri.alacakEkle_kaydet('+kisi.id+');');
 	$('#UI_btn_odeme_ekle_kaydet').attr('onclick', 'musteri.odemeEkle_kaydet('+kisi.id+');');
-	$('#UI_btn_bilgileri_guncelle_kaydet').attr('onclick', 'musteri.bilgileriGuncelle_kaydet('+kisi.id+');');
+	$('#UI_btn_bilgi_guncelle_kaydet').attr('onclick', 'musteri.bilgileriGuncelle_kaydet('+kisi.id+');');
 	
 	if (kisi.hesap_durumu == 1)
 	{
@@ -185,6 +185,36 @@ function generateTable(paraAkisi)
 
 var musteri = 
 {
+	ekleme_formu : function()
+	{
+		$.fancybox.showLoading();
+		$.fancybox( {href : '#musteri_ekleme_formu'} );
+	},
+	
+	
+	ekle : function()
+	{		
+		var params = 
+		{
+			duty 		: 'musteri_ekle',
+			isimsoyisim	: $('#ekle_isimsoyisim').val(),
+			adres		: $('#ekle_adres').val(),
+			telefon		: $('#ekle_telefon').val(),
+		}
+		
+		$.post(postUrl, params, function(resp){
+			if (resp == 1)
+			{
+				alert('Müşteri başarıyla eklendi!.');
+				location.reload();
+			}
+			else
+			{
+				alert('Müşteri eklenirken bir sorun oluştu!.');
+			}
+		});
+	},
+	
 	sil : function(id)
 	{
 		var params = 
@@ -310,7 +340,26 @@ var musteri =
 	
 	bilgileriGuncelle_kaydet : function(musteri_id)
 	{
+		params = 
+		{
+			duty : 'musteri_bilgi_guncelle_kaydet',
+			id : musteri_id,
+			isimsoyisim : $('#bg_isimsoyisim').val() ,
+			adres : $('#bg_adres').val() ,
+			telefon : $('#bg_telefon').val()
+		}
 		
+		$.post(postUrl, params, function(resp){
+			if (resp == 1)
+			{
+				alert('Müşteri bilgileri başarıyla güncellendi!');
+				location.reload();
+			}
+			else
+			{
+				alert('Müşteri bilgileri güncellenirken bir hata oluştu!.');
+			}
+		});
 	},
 	
 	islem : 

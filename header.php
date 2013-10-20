@@ -57,6 +57,18 @@
 					<div id="arama_sonuc" style="width:400px;">
 						<h4>Arama Sonuçları</h4><span id="sonuc_container"></span>
 					</div>
+					<div id="musteri_ekleme_formu">
+						İsim Soyisim : 
+						<input type="text" class="form-control" id="ekle_isimsoyisim"/>
+						Adres :
+						<textarea id="ekle_adres" class="form-control"></textarea>
+						Telefon : 
+						<input type="text" class="form-control" id="ekle_telefon"/>
+						<br />
+						<button class="btn btn-xs btn-success" onclick="musteri.ekle();">
+							<i class="glyphicon glyphicon-plus"></i> Ekle
+						</button>
+					</div>
 					';
 				}
 			?>
@@ -78,7 +90,7 @@
 						<button class="btn btn-primary btn-sm">
 							<i class="glyphicon glyphicon-list"></i> Müşteri Listesi
 						</button>
-						<button class="btn btn-success btn-sm">
+						<button class="btn btn-success btn-sm" onclick="musteri.ekleme_formu();">
 							<i class="glyphicon glyphicon-plus"></i> Müşteri Ekle
 						</button>
 						<button class="btn btn-danger btn-sm" onclick="logout();">
@@ -95,6 +107,6 @@
 		
 	<script>
 		$(function(){
-			$('#arama_sonuc').hide();
+			$('#arama_sonuc, #musteri_ekleme_formu').hide();
 		});
 	</script>

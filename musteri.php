@@ -18,7 +18,16 @@ print_r( getdate() );
 			generateTable(JSON.stringify(alacakVerecekBilgileri));
 			
 			$('#alacak_ekle, #odeme_ekle, #bilgileri_guncelle, #islem_kaydi_guncelle').hide();
+			$('#islem_kaydi_guncelle input#tarih, #alacak_ekle input#tarih, #odeme_ekle input#tarih')
+				.datepicker({
+					format: "mm/dd/yyyy",
+					todayBtn: "linked",
+					language: "tr",
+					autoclose: true,
+					todayHighlight: true
+				});
 		});
+		
 	</script>
 	
 	
@@ -28,7 +37,11 @@ print_r( getdate() );
 			<br />
 			<strong>Adres : </strong> <span id="UI_adres"></span>
 			<br />
-			<strong>Telefon : </strong> <span id="UI_telefon"></span>
+			<strong>Telefon1 : </strong> <span id="UI_telefon1"></span>
+			<br />
+			<strong>Telefon2 : </strong> <span id="UI_telefon2"></span>
+			<br />
+			<strong>Telefon3 : </strong> <span id="UI_telefon3"></span>
 		</div>
 		<div class="col-sm-5 col-lg-5">
 			<strong>Müşteri ID : </strong> <span id="UI_id"></span>
@@ -130,8 +143,12 @@ print_r( getdate() );
 		<input type="text" class="form-control" id="bg_isimsoyisim"/>
 		Adres :
 		<textarea id="bg_adres" class="form-control"></textarea>
-		Telefon : 
-		<input type="text" class="form-control" id="bg_telefon"/>
+		Telefon1 : 
+		<input type="text" class="form-control" id="bg_telefon1"/>
+		Telefon2 : 
+		<input type="text" class="form-control" id="bg_telefon2"/>
+		Telefon3 : 
+		<input type="text" class="form-control" id="bg_telefon3"/>
 		<br />
 		<button class="btn btn-xs btn-success" id="UI_btn_bilgi_guncelle_kaydet">
 			<i class="glyphicon glyphicon-ok"></i> Güncelle

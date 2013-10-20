@@ -58,35 +58,43 @@ function logout()
 
 function arama()
 {
-	$.fancybox.showLoading();
 	var query = $('input#arama').val();
-	
-	if (arama_tipi(query) == 'isim')
+	if (query != '')
 	{
-		var params = 
-		{
-			duty 	: 'arama',
-			tip		: 'isim',
-			query	: query
-		}		
+		$.fancybox.showLoading();
 		
-		$.post(postUrl, params, function(resp){
-			arama_goster($.parseJSON(resp));
-		});
+		if (arama_tipi(query) == 'isim')
+		{
+			var params = 
+			{
+				duty 	: 'arama',
+				tip		: 'isim',
+				query	: query
+			}		
+			
+			$.post(postUrl, params, function(resp){
+				arama_goster($.parseJSON(resp));
+			});
+		}
+		else
+		{
+			var params = 
+			{
+				duty 	: 'arama',
+				tip		: 'telefon',
+				query	: query
+			}		
+			
+			$.post(postUrl, params, function(resp){
+				arama_goster($.parseJSON(resp));
+			});
+		}	
 	}
 	else
 	{
-		var params = 
-		{
-			duty 	: 'arama',
-			tip		: 'telefon',
-			query	: query
-		}		
-		
-		$.post(postUrl, params, function(resp){
-			arama_goster($.parseJSON(resp));
-		});
+		alert('Lütfen İsim, Soyisim ya da Telefon Numarası Yazınız!.');
 	}
+	
 }
 
 
@@ -121,7 +129,9 @@ function generateUI(kisi)
 	kisi = $.parseJSON(kisi);
 	$('#UI_isimsoyisim').text(kisi.isimsoyisim);
 	$('#UI_adres').text(kisi.adres);
-	$('#UI_telefon').text(kisi.telefon);
+	$('#UI_telefon1').text(kisi.telefon1);
+	$('#UI_telefon2').text(kisi.telefon2);
+	$('#UI_telefon3').text(kisi.telefon3);
 	$('#UI_id').text(kisi.id);
 	$('#UI_btn_musteri_sil').attr('onclick', 'musteri.sil('+kisi.id+');');
 	$('#UI_btn_hesap_durumu').attr('onclick', 'musteri.hesapDurumuToggle('+kisi.id+');');
@@ -199,14 +209,23 @@ var musteri =
 			duty 		: 'musteri_ekle',
 			isimsoyisim	: $('#ekle_isimsoyisim').val(),
 			adres		: $('#ekle_adres').val(),
-			telefon		: $('#ekle_telefon').val(),
+			telefon1	: $('#ekle_telefon1').val(),
+			telefon2	: $('#ekle_telefon2').val(),
+			telefon3	: $('#ekle_telefon3').val(),
 		}
 		
 		$.post(postUrl, params, function(resp){
 			if (resp == 1)
 			{
 				alert('Müşteri başarıyla eklendi!.');
-				location.reload();
+				var params2 = 
+				{
+					duty	: 'get_last_id'
+				};
+				$.post(postUrl, params2, function(resp)
+				{
+					location.href = 'musteri.php?id='+resp;	
+				});
 			}
 			else
 			{
@@ -267,7 +286,7 @@ var musteri =
 	
 	alacakEkle_kaydet : function(musteri_id)
 	{
-		params = 
+		var params = 
 		{
 			duty : 'alacak_ekle',
 			id : musteri_id,
@@ -276,6 +295,18 @@ var musteri =
 			tutar : $('#alacak_ekle #tutar').val()
 		}
 		
+/*
+		var hede1 = new Date(params.tarih);
+		var hede2 = new Date(hede1).getTime()/1000+10800;
+		var hede3 = new Date(hede2);
+		
+		console.log(params.tarih);
+		console.log(hede1);
+		console.log(hede2);
+		console.log(hede3);
+		
+		return false;
+*/
 		$.post(postUrl, params, function(resp){
 			if (resp == 1)
 			{
@@ -334,7 +365,9 @@ var musteri =
 			
 			$('#bg_isimsoyisim').val(kisi.isimsoyisim);
 			$('#bg_adres').text(kisi.adres);
-			$('#bg_telefon').val(kisi.telefon);
+			$('#bg_telefon1').val(kisi.telefon1);
+			$('#bg_telefon2').val(kisi.telefon2);
+			$('#bg_telefon3').val(kisi.telefon3);
 		});
 	},
 	
@@ -342,11 +375,13 @@ var musteri =
 	{
 		params = 
 		{
-			duty : 'musteri_bilgi_guncelle_kaydet',
-			id : musteri_id,
+			duty 		: 'musteri_bilgi_guncelle_kaydet',
+			id 			: musteri_id,
 			isimsoyisim : $('#bg_isimsoyisim').val() ,
-			adres : $('#bg_adres').val() ,
-			telefon : $('#bg_telefon').val()
+			adres 		: $('#bg_adres').val() ,
+			telefon1 	: $('#bg_telefon1').val(),
+			telefon2 	: $('#bg_telefon2').val(),
+			telefon3 	: $('#bg_telefon3').val()
 		}
 		
 		$.post(postUrl, params, function(resp){
@@ -368,6 +403,7 @@ var musteri =
 		{
 			$.fancybox.showLoading();
 			$.fancybox( {href : '#islem_kaydi_guncelle'} );
+			
 			$('#UI_btn_islem_kaydi_guncelle_kaydet').attr('onclick', 'musteri.islem.guncelle('+islem_id+');');
 			
 			var params = 

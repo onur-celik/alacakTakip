@@ -69,7 +69,9 @@
 						id => $musteri->id,
 						isimsoyisim => $musteri->isimsoyisim,
 						adres => $musteri->adres,
-						telefon => $musteri->telefon,
+						telefon1 => $musteri->telefon1,
+						telefon2 => $musteri->telefon2,
+						telefon3 => $musteri->telefon3,
 						hesap_durumu => $musteri->hesap_durumu
 					);
 					
@@ -83,7 +85,7 @@
 				connect_db();
 				$query = $_POST['query'];
 				
-				$msquery = mysql_query("SELECT * FROM musteriler WHERE telefon LIKE '%$query%'");
+				$msquery = mysql_query("SELECT * FROM musteriler WHERE telefon1 LIKE '%$query%' OR telefon2 LIKE '%$query%' OR telefon3 LIKE '%$query%'");
 
 				$resp = array();
 				
@@ -154,9 +156,11 @@
 			connect_db();
 			$isimsoyisim 	= $_POST['isimsoyisim'];
 			$adres 			= $_POST['adres'];
-			$telefon 		= $_POST['telefon'];
+			$telefon1 		= $_POST['telefon1'];
+			$telefon2 		= $_POST['telefon2'];
+			$telefon3 		= $_POST['telefon3'];
 			
-			if ($msquery = mysql_query("INSERT INTO musteriler VALUES('', '$isimsoyisim', '$adres', '$telefon', '0')"))
+			if ($msquery = mysql_query("INSERT INTO musteriler VALUES('', '$isimsoyisim', '$adres', '$telefon1', '$telefon2', '$telefon3', '0')"))
 			{
 				echo 1;
 			}
@@ -164,6 +168,15 @@
 			{
 				echo 0;
 			}
+			
+		break;
+		
+		case "get_last_id":
+			connect_db();
+			$q = mysql_query("SELECT * FROM musteriler ORDER BY id DESC LIMIT 1");
+			$row = mysql_fetch_object($q);
+			
+			echo $row->id;
 			
 		break;
 		
@@ -177,7 +190,9 @@
 			$bilgiler = array(
 				isimsoyisim => $kisi->isimsoyisim,
 				adres => $kisi->adres,
-				telefon => $kisi->telefon
+				telefon1 => $kisi->telefon1,
+				telefon2 => $kisi->telefon2,
+				telefon3 => $kisi->telefon3
 			);
 			
 			echo json_encode($bilgiler);
@@ -189,9 +204,11 @@
 			$id 			= $_POST['id'];
 			$isimsoyisim 	= $_POST['isimsoyisim'];
 			$adres 			= $_POST['adres'];
-			$telefon 		= $_POST['telefon'];
+			$telefon1 		= $_POST['telefon1'];
+			$telefon2 		= $_POST['telefon2'];
+			$telefon3		= $_POST['telefon3'];
 			
-			if($msquery = mysql_query("UPDATE musteriler SET isimsoyisim='$isimsoyisim', adres='$adres', telefon='$telefon' WHERE id='$id' "))
+			if($msquery = mysql_query("UPDATE musteriler SET isimsoyisim='$isimsoyisim', adres='$adres', telefon1='$telefon1', telefon2='$telefon2', telefon3='$telefon3' WHERE id='$id' "))
 			{
 				echo 1;
 			}
@@ -346,7 +363,9 @@ function get_musteri_bilgileri($id)
 			id => $musteri->id,
 			isimsoyisim => $musteri->isimsoyisim,
 			adres => $musteri->adres,
-			telefon => $musteri->telefon,
+			telefon1 => $musteri->telefon1,
+			telefon2 => $musteri->telefon2,
+			telefon3 => $musteri->telefon3,
 			hesap_durumu => $musteri->hesap_durumu
 		);
 	

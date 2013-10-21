@@ -1,5 +1,5 @@
 <?php include "header.php"; ?>
-	
+<div class="table-responsive">	
 	<table class="table table-hover table-striped table-bordered">
 		<thead>
 			<th>İsim Soyisim</th>
@@ -42,4 +42,4 @@
 		?>		
 		</tbody>
 	</table>
-	
+</div>	

@@ -1,12 +1,16 @@
 //vars
 var postUrl = 'php_functions.php';
-
+var stack_bottomright = {"dir1": "up", "dir2": "left", "firstpos1": 25, "firstpos2": 25};
 /* DOCUMENT READY */
 $(function(){
+	$.pnotify.defaults.history = false;
+	$.pnotify.defaults.delay = 4000;
 	
 	getTotalMusteri();
 	getAcikHesaplar();
 	getKapaliHesaplar();
+	getToplamAlacak();
+	getToplamYapilanIs();
 		
 		
 });
@@ -28,11 +32,28 @@ function login()
 	$.post(postUrl, params, function(resp){
 		if (resp == 'success')
 		{
-			location.href = 'index.php';
+			
+			$.pnotify({
+			    title	: 'Başarılı',
+			    text	: 'Hoşgeldiniz!.',
+			    type	: 'success',
+			    addclass: "stack-bottomright",
+			    stack   : stack_bottomright
+			});
+				
+			setTimeout(function(){
+				location.href = "index.php";
+			},2000);
 		}
 		else
-		{
-			alert('Parola Hatalı!');
+		{	
+			$.pnotify({
+			    title	: 'Parola Hatalı',
+			    text	: 'Lütfen parolanızı kontrol edip tekrar deneyin!',
+			    type	: 'error',
+			    addclass: "stack-bottomright",
+			    stack   : stack_bottomright
+			});
 		}
 	})
 }
@@ -51,7 +72,13 @@ function logout()
 		}
 		else
 		{
-			alert('Çıkış Yapılamadı!');
+			$.pnotify({
+			    title	: 'Hata!',
+			    text	: 'Çıkış Yapılamadı!',
+			    type	: 'error',
+			    addclass: "stack-bottomright",
+			    stack   : stack_bottomright
+			});
 		}
 	})
 }
@@ -91,8 +118,14 @@ function arama()
 		}	
 	}
 	else
-	{
-		alert('Lütfen İsim, Soyisim ya da Telefon Numarası Yazınız!.');
+	{	
+		$.pnotify({
+		    title	: 'Arama Boş',
+		    text	: 'Lütfen İsim, Soyisim ya da Telefon Numarası Yazınız!.',
+		    type	: 'error',
+		    addclass: "stack-bottomright",
+		    stack   : stack_bottomright
+		});
 	}
 	
 }
@@ -217,19 +250,34 @@ var musteri =
 		$.post(postUrl, params, function(resp){
 			if (resp == 1)
 			{
-				alert('Müşteri başarıyla eklendi!.');
+				$.pnotify({
+				    title	: 'Başarılı',
+				    text	: 'Müşteri başarıyla eklendi!.',
+				    type	: 'success',
+				    addclass: "stack-bottomright",
+				    stack   : stack_bottomright
+				});
+
 				var params2 = 
 				{
 					duty	: 'get_last_id'
 				};
 				$.post(postUrl, params2, function(resp)
 				{
-					location.href = 'musteri.php?id='+resp;	
+					setTimeout(function(){
+						location.href = 'musteri.php?id='+resp;	
+					},2000);
 				});
 			}
 			else
 			{
-				alert('Müşteri eklenirken bir sorun oluştu!.');
+				$.pnotify({
+				    title	: 'Hata',
+				    text	: 'Müşteri eklenirken bir sorun oluştu!.',
+				    type	: 'error',
+				    addclass: "stack-bottomright",
+				    stack   : stack_bottomright
+				});
 			}
 		});
 	},
@@ -247,12 +295,26 @@ var musteri =
 			$.post(postUrl, params, function(resp){
 				if (resp == '1')
 				{
-					alert('Müşteri Başarıyla Silindi!.');
-					location.href = "index.php";
+					$.pnotify({
+					    title	: 'Başarılı',
+					    text	: 'Müşteri başarıyla silindi!.',
+					    type	: 'success',
+					    addclass: "stack-bottomright",
+					    stack   : stack_bottomright
+					});
+					setTimeout(function(){
+						location.href = "index.php";
+					},2000);
 				}
 				else
 				{
-					alert('Silme İşlemi Sırasında Bir Hata Oluştu!.');
+					$.pnotify({
+					    title	: 'Hata',
+					    text	: 'Silme İşlemi Sırasında Bir Hata Oluştu!.',
+					    type	: 'error',
+					    addclass: "stack-bottomright",
+					    stack   : stack_bottomright
+					});
 				}
 			});	
 		}	
@@ -309,13 +371,28 @@ var musteri =
 */
 		$.post(postUrl, params, function(resp){
 			if (resp == 1)
-			{
-				alert('Alacak bilgisi başarıyla eklendi!');
-				location.reload();
+			{	
+				$.pnotify({
+				    title	: 'Başarılı',
+				    text	: 'Alacak bilgisi başarıyla eklendi!',
+				    type	: 'success',
+				    addclass: "stack-bottomright",
+				    stack   : stack_bottomright
+				});
+				setTimeout(function(){
+					location.reload();
+				},2000);
+				
 			}
 			else
 			{
-				alert('Alacak bilgisi eklenirken bir hata oluştu!.');
+				$.pnotify({
+				    title	: 'Hata!',
+				    text	: 'Alacak bilgisi eklenirken bir hata oluştu!.',
+				    type	: 'error',
+				    addclass: "stack-bottomright",
+				    stack   : stack_bottomright
+				});
 			}
 		});
 	},
@@ -340,12 +417,26 @@ var musteri =
 		$.post(postUrl, params, function(resp){
 			if (resp == 1)
 			{
-				alert('Ödeme bilgisi başarıyla eklendi!');
-				location.reload();
+				$.pnotify({
+				    title	: 'Başarılı',
+				    text	: 'Ödeme bilgisi başarıyla eklendi!',
+				    type	: 'success',
+				    addclass: "stack-bottomright",
+				    stack   : stack_bottomright
+				});
+				setTimeout(function(){
+					location.reload();
+				},2000);
 			}
 			else
 			{
-				alert('Ödeme bilgisi eklenirken bir hata oluştu!.');
+				$.pnotify({
+				    title	: 'Hata!',
+				    text	: 'Ödeme bilgisi eklenirken bir hata oluştu!.',
+				    type	: 'error',
+				    addclass: "stack-bottomright",
+				    stack   : stack_bottomright
+				});
 			}
 		});
 	},
@@ -387,12 +478,26 @@ var musteri =
 		$.post(postUrl, params, function(resp){
 			if (resp == 1)
 			{
-				alert('Müşteri bilgileri başarıyla güncellendi!');
-				location.reload();
+				$.pnotify({
+				    title	: 'Başarılı',
+				    text	: 'Müşteri bilgileri başarıyla güncellendi!',
+				    type	: 'success',
+				    addclass: "stack-bottomright",
+				    stack   : stack_bottomright
+				});
+				setTimeout(function(){
+					location.reload();
+				},2000);
 			}
 			else
 			{
-				alert('Müşteri bilgileri güncellenirken bir hata oluştu!.');
+				$.pnotify({
+				    title	: 'Hata!',
+				    text	: 'Müşteri bilgileri güncellenirken bir hata oluştu!.',
+				    type	: 'error',
+				    addclass: "stack-bottomright",
+				    stack   : stack_bottomright
+				});
 			}
 		});
 	},
@@ -446,12 +551,27 @@ var musteri =
 			$.post(postUrl, params, function(resp){
 				if (resp == 1)
 				{
-					alert('İşlem kaydı başarıyla güncellendi!.');
-					location.reload();
+					$.pnotify({
+					    title	: 'Başarılı',
+					    text	: 'İşlem kaydı başarıyla güncellendi!.',
+					    type	: 'success',
+					    addclass: "stack-bottomright",
+					    stack   : stack_bottomright
+					});
+					
+					setTimeout(function(){
+						location.reload();
+					},2000);
 				}
 				else
 				{
-					alert('İşlem kaydı güncellenirken bir hata oluştu!.');
+					$.pnotify({
+					    title	: 'Hata!',
+					    text	: 'İşlem kaydı güncellenirken bir hata oluştu!.',
+					    type	: 'error',
+					    addclass: "stack-bottomright",
+					    stack   : stack_bottomright
+					});
 				}
 			});
 		},
@@ -469,12 +589,26 @@ var musteri =
 				$.post(postUrl, params, function(resp){
 					if (resp == 1)
 					{
-						alert('İşlem kaydı başarıyla silindi!.');
-						location.reload();
+						$.pnotify({
+						    title	: 'Başarılı',
+						    text	: 'İşlem kaydı başarıyla silindi!.',
+						    type	: 'success',
+						    addclass: "stack-bottomright",
+						    stack   : stack_bottomright
+						});
+						setTimeout(function(){
+							location.reload();
+						},2000);
 					}
 					else
 					{
-						alert('İşlem kaydı silinirken bir hata oluştu!.');	
+						$.pnotify({
+						    title	: 'Hata!',
+						    text	: 'İşlem kaydı silinirken bir hata oluştu!.',
+						    type	: 'error',
+						    addclass: "stack-bottomright",
+						    stack   : stack_bottomright
+						});
 					}
 				});
 				
@@ -521,5 +655,33 @@ function getKapaliHesaplar()
 	$.post(postUrl, params, function(resp)
 	{
 		$('span#kapali_hesaplar').text(resp);
+	});
+}
+
+function getToplamAlacak()
+{
+	var params = 
+	{
+		duty : 'getToplamAlacak'
+	}
+	
+	$.post(postUrl, params, function(resp)
+	{
+		$('span#toplam_alacak').text(resp+' TL');
+	});
+}
+
+function getToplamYapilanIs()
+{
+	$.fancybox.showLoading();
+	var params = 
+	{
+		duty : 'getToplamYapilanIs'
+	}
+	
+	$.post(postUrl, params, function(resp)
+	{
+		$('span#toplam_yapilan_is').text(resp+' TL');
+		$.fancybox.hideLoading();
 	});
 }

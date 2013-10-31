@@ -69,29 +69,35 @@ print_r( getdate() );
 		</div>
 	</div>
 	
+<!--
 	<div class="row">
 		<div class="col-sm-12 col-lg-12">
-			<div class="table-responsive">
-				<table class="table table-bordered table-striped table-hover" id="islemler">
-					<thead>
-						<tr>
-							<th>Tarih</th>
-							<th>Açıklama</th>
-							<th>Tutar</th>
-							<th>İşlem</th>
-						</tr>
-					</thead>
-					<tbody>
-						<!-- database den geliyor... -->
-					</tbody>
-					<tfoot>
-						<tr class="warning">
-							<th colspan="2">Bakiye :</th>
-							<th colspan="2" id="UI_bakiye_tutar"></th>
-						</tr>
-					</tfoot>
-				</table>
-			</div>
+			<button class="btn btn-default btn-sm">Not</button>
+		</div>
+	</div>
+-->
+	
+	<div class="row">
+		<div class="col-sm-12 col-lg-12 table-responsive">
+			<table class="table table-bordered table-striped table-hover" id="islemler">
+				<thead>
+					<tr>
+						<th>Tarih</th>
+						<th>Açıklama</th>
+						<th>Tutar</th>
+						<th>İşlem</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- database den geliyor... -->
+				</tbody>
+				<tfoot>
+					<tr class="warning">
+						<th colspan="2">Bakiye :</th>
+						<th colspan="2" id="UI_bakiye_tutar"></th>
+					</tr>
+				</tfoot>
+			</table>
 		</div>
 	</div>
 	
@@ -157,5 +163,8 @@ print_r( getdate() );
 		</button>
 	</div>
 	
+	<div id="musteriNot">
+		
+	</div>
 	
 <?php include "footer.php"; ?>

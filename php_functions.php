@@ -9,9 +9,9 @@
 	function connect_db()
 	{
 		$hostname   = "localhost";
-		$user       = "root";
-		$pass       = "";
-		$db_name    = "halacoglu";
+		$user       = "onur";
+		$pass       = "112233+-+-";
+		$db_name    = "onur_alacakTakip";
 		
 		$link = mysql_connect($host, $user, $pass);
 		mysql_select_db($db_name) or die('dbye baglanamadi');
@@ -21,7 +21,7 @@
 	switch($duty)
 	{
 		case "login":
-			if ($_POST['password'] == 'onur')
+			if ($_POST['password'] == 'bolu1989')
 			{
 				$_SESSION['yetkili'] = 'nesrin';
 				if($_SESSION['yetkili'])
@@ -110,6 +110,25 @@
 		case "musteri_sil":
 			connect_db();
 			$id = $_POST['id'];
+			
+			$musterinin_islemleri 	 = mysql_query("SELECT * FROM islemler WHERE musteri_id='$id'");
+			$musterinin_islem_sayisi = mysql_num_rows($musterinin_islemleri);
+			
+			if ($musterinin_islem_sayisi > 0)
+			{
+				while($row = mysql_fetch_object($musterinin_islemleri))
+				{
+					if(mysql_query("DELETE FROM islemler WHERE id='$row->id'"))
+					{
+							
+					}
+					else
+					{
+						echo 0;
+					}
+				}
+			}
+			
 			
 			if (mysql_query("DELETE FROM musteriler WHERE id='$id'"))
 			{
@@ -330,6 +349,43 @@
 			echo $total;
 		break;
 		
+		case "getToplamYapilanIs":
+			connect_db();
+			
+			$msquery = mysql_query("SELECT * FROM islemler WHERE tip='0'");
+			
+			$total = 0;
+			
+			while($row=mysql_fetch_object($msquery))
+			{
+				$total = $total + $row->tutar;
+			}
+			
+			echo $total;
+		break;
+		
+		case "getToplamAlacak":
+			connect_db();
+			$alacakquery = mysql_query("SELECT * FROM islemler WHERE tip='0'");
+			$odemequery = mysql_query("SELECT * FROM islemler WHERE tip='1'");
+			
+			$alacakToplam 	= 0;
+			$odemeToplam 	= 0; 
+			
+			while($row = mysql_fetch_object($alacakquery))
+			{
+				$alacakToplam = $alacakToplam + $row->tutar;
+			}
+			
+			while($row = mysql_fetch_object($odemequery))
+			{
+				$odemeToplam = $odemeToplam + $row->tutar;
+			}
+			
+			//echo "a : " . $alacakToplam . " o : " . $odemeToplam;
+			echo $alacakToplam - $odemeToplam;
+		break;
+		
 	} // SWITCH / CASE end
 	
 
@@ -396,5 +452,67 @@ function get_alacakVerecek_bilgileri($id)
 	echo json_encode($butunAkis);
 		
 }	
+
+function timeTR($par)
+{
+	
+	$explode = explode(" ", $par);
+	$explode2 = explode(".", $explode[0]);
+	$zaman = substr($explode[1], 0, 5);
+	
+	if ($explode2[1] == "1") 
+	{
+		$ay = "Ocak";
+	}
+	elseif ($explode2[1] == "2") 
+	{
+		$ay = "Şubat";
+	}
+	elseif ($explode2[1] == "3") 
+	{
+		$ay = "Mart";
+	}
+	elseif ($explode2[1] == "4")
+	{
+		$ay = "Nisan";
+	}
+	elseif ($explode2[1] == "5")
+	{
+		$ay = "Mayıs";
+	}
+	elseif ($explode2[1] == "6")
+	{
+		$ay = "Haziran";
+	}
+	elseif ($explode2[1] == "7")
+	{
+		$ay = "Temmuz";
+	}
+	elseif ($explode2[1] == "8")
+	{
+		$ay = "Ağustos";
+	}
+	elseif ($explode2[1] == "9")
+	{
+		$ay = "Eylül";
+	}
+	elseif ($explode2[1] == "10")
+	{
+		$ay = "Ekim";
+	}
+	elseif ($explode2[1] == "11")
+	{
+		$ay = "Kasım";
+	}
+	elseif ($explode2[1] == "12")
+	{
+		$ay = "Aralık";
+	}
+
+	//return $explode2[2]." ".$ay." ".$explode2[0].", ".$zaman;
+	return $explode2[2]." ".$ay." ".$explode2[0];
+	
+}
+
 	
 ?>

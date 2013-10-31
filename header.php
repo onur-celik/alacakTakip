@@ -12,6 +12,8 @@
 		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
 		<link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" />
 		<link rel="stylesheet" href="css/datepicker.css" type="text/css" />
+		<link rel="stylesheet" href="css/jquery.pnotify.default.css" type="text/css" />
+		<link rel="stylesheet" href="css/jquery.pnotify.default.icons.css" type="text/css" />
 		<link rel="stylesheet/less" href="css/main.less" type="text/css" />
 		
 		<script type="text/javascript" src="js/jquery.min.js"></script>
@@ -20,7 +22,9 @@
 		<script type="text/javascript" src="js/bootstrap-datepicker.tr.js"></script>
 		<script type="text/javascript" src="js/lesscss.min.js"></script>
 		<script type="text/javascript" src="js/jquery.fancybox.js"></script>
+		<script type="text/javascript" src="js/jquery.pnotify.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
+		
 		
 	</head>
 	 
@@ -91,7 +95,11 @@
 			
 				<div class="row">
 					<div class="col-sm-6 col-lg-6">
-						<strong>Bugün : </strong>'; echo date("d-m-Y"); echo'
+						<i class="glyphicon glyphicon-calendar"></i> 
+						<strong>Bugün : </strong>'; 
+							$tar = date("Y.m.d H:i:s");
+							echo timeTR($tar); 
+			echo'
 					</div>
 					<div class="col-sm-6 col-lg-6 text-right">
 						<button class="btn btn-primary btn-sm" onclick="location.href=\'musteri_listesi.php\';">

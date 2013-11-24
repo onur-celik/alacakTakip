@@ -6,7 +6,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>Halacoglu - Müşteri Takip Programı</title>
+		<title>Müşteri Takip Programı</title>
 		<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
 		 
 		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
@@ -43,7 +43,7 @@
 					echo '<div class="col-sm-6 col-lg-6 col-sm-offset-3 col-lg-offset-3">';
 				}
 			?>
-				<a href="index.php"><h1 class="proxima-regular">Halaçoğlu Müşteri Takip Sistemi</h1></a>
+				<a href="index.php"><h1 class="proxima-regular"><span id="sahip"></span> Müşteri Takip Sistemi</h1></a>
 			</div>
 			<?php
 				if (isset($_SESSION['yetkili']))
@@ -107,6 +107,9 @@
 						</button>
 						<button class="btn btn-success btn-sm" onclick="musteri.ekleme_formu();">
 							<i class="glyphicon glyphicon-plus"></i> Müşteri Ekle
+						</button>
+						<button class="btn btn-info btn-sm" onclick="ayarlar();">
+							<i class="glyphicon glyphicon-wrench"></i> Ayarlar
 						</button>
 						<button class="btn btn-danger btn-sm" onclick="logout();">
 							<i class="glyphicon glyphicon-log-out"></i> Çıkış Yap

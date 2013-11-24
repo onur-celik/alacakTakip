@@ -9,9 +9,9 @@
 	function connect_db()
 	{
 		$hostname   = "localhost";
-		$user       = "onur";
-		$pass       = "112233+-+-";
-		$db_name    = "onur_alacakTakip";
+		$user       = "root";
+		$pass       = "";
+		$db_name    = "alacakTakip";
 		
 		$link = mysql_connect($host, $user, $pass);
 		mysql_select_db($db_name) or die('dbye baglanamadi');
@@ -20,10 +20,30 @@
 	
 	switch($duty)
 	{
-		case "login":
-			if ($_POST['password'] == 'bolu1989')
+		case "getSahip":
+			connect_db();
+			if ($q = mysql_query("SELECT * FROM ayarlar WHERE id='1'"))
 			{
-				$_SESSION['yetkili'] = 'nesrin';
+				if($data = mysql_fetch_object($q))
+				{
+					echo $data->value;
+				}
+			}
+			else
+			{
+				echo 'bilinmeyen';
+			}
+		break;
+		
+		case "login":
+			connect_db();
+			$q 		= mysql_query("SELECT * FROM ayarlar WHERE id='2'");
+			$data	= mysql_fetch_object($q);
+			$sifre 	= $data->value;
+			
+			if ($_POST['password'] == $sifre)
+			{
+				$_SESSION['yetkili'] = 'authed';
 				if($_SESSION['yetkili'])
 				{
 					echo "success";

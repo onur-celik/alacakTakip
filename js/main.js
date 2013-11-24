@@ -6,6 +6,7 @@ $(function(){
 	$.pnotify.defaults.history = false;
 	$.pnotify.defaults.delay = 4000;
 	
+	getSahip();
 	getTotalMusteri();
 	getAcikHesaplar();
 	getKapaliHesaplar();
@@ -17,7 +18,24 @@ $(function(){
 /* DOCUMENT READY END */
 
 
+function getSahip()
+{
+	var params = 
+	{
+		duty : 'getSahip'
+	}
+	
+	$.post(postUrl, params, function(resp)
+	{
+		$('span#sahip').text(resp);
+		$('title').prepend(resp + ' ');
+	});
+}
 
+function ayarlar()
+{
+	alert('coming soon');
+}
 
 function login()
 {
@@ -43,10 +61,11 @@ function login()
 				
 			setTimeout(function(){
 				location.href = "index.php";
-			},2000);
+			},1200);
 		}
 		else
 		{	
+			console.log(resp);
 			$.pnotify({
 			    title	: 'Parola Hatalı',
 			    text	: 'Lütfen parolanızı kontrol edip tekrar deneyin!',
@@ -266,7 +285,7 @@ var musteri =
 				{
 					setTimeout(function(){
 						location.href = 'musteri.php?id='+resp;	
-					},2000);
+					},1200);
 				});
 			}
 			else
@@ -304,7 +323,7 @@ var musteri =
 					});
 					setTimeout(function(){
 						location.href = "index.php";
-					},2000);
+					},1200);
 				}
 				else
 				{
@@ -381,7 +400,7 @@ var musteri =
 				});
 				setTimeout(function(){
 					location.reload();
-				},2000);
+				},1200);
 				
 			}
 			else
@@ -426,7 +445,7 @@ var musteri =
 				});
 				setTimeout(function(){
 					location.reload();
-				},2000);
+				},1200);
 			}
 			else
 			{
@@ -487,7 +506,7 @@ var musteri =
 				});
 				setTimeout(function(){
 					location.reload();
-				},2000);
+				},1200);
 			}
 			else
 			{
@@ -561,7 +580,7 @@ var musteri =
 					
 					setTimeout(function(){
 						location.reload();
-					},2000);
+					},1200);
 				}
 				else
 				{
@@ -598,7 +617,7 @@ var musteri =
 						});
 						setTimeout(function(){
 							location.reload();
-						},2000);
+						},1200);
 					}
 					else
 					{

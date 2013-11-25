@@ -19,14 +19,24 @@
 	}
 	
 	switch($duty)
-	{
+	{	
 		case "getSahip":
 			connect_db();
+			
+			$bilgiler[0] = '';
 			if ($q = mysql_query("SELECT * FROM ayarlar WHERE id='1'"))
 			{
 				if($data = mysql_fetch_object($q))
 				{
-					echo $data->value;
+					$bilgiler['sahip'] = $data->value;
+					
+					if ($q = mysql_query("SELECT * FROM ayarlar WHERE id='7'"))
+					{
+						$data = mysql_fetch_object($q);
+						$bilgiler['email'] = $data->value;
+						
+						echo json_encode($bilgiler);
+					}
 				}
 			}
 			else
@@ -140,7 +150,7 @@
 				{
 					if(mysql_query("DELETE FROM islemler WHERE id='$row->id'"))
 					{
-							
+						echo 1;		
 					}
 					else
 					{
@@ -406,6 +416,128 @@
 			echo $alacakToplam - $odemeToplam;
 		break;
 		
+		case "backUpDB":
+			$host 	= 'localhost';
+			$user 	= 'root';
+			$pass	= '';
+			$name	= 'alacakTakip';
+			$tables	= 'islemler, musteriler';
+			
+			$link = mysql_connect($host,$user,$pass);
+			mysql_select_db($name,$link);
+			
+			//get all of the tables
+			if($tables == '*')
+			{
+				$tables = array();
+				$result = mysql_query('SHOW TABLES');
+				while($row = mysql_fetch_row($result))
+				{
+					$tables[] = $row[0];
+				}
+			}
+			else
+			{
+				$tables = is_array($tables) ? $tables : explode(',',$tables);
+			}
+			error_reporting(0);
+			//cycle through
+			foreach($tables as $table)
+			{
+				$result = mysql_query('SELECT * FROM '.$table);
+				$num_fields = mysql_num_fields($result);
+				
+				$return.= 'DROP TABLE '.$table.';';
+				$row2 = mysql_fetch_row(mysql_query('SHOW CREATE TABLE '.$table));
+				$return.= "\n\n".$row2[1].";\n\n";
+				
+				for ($i = 0; $i < $num_fields; $i++) 
+				{
+					while($row = mysql_fetch_row($result))
+					{
+						$return.= 'INSERT INTO '.$table.' VALUES(';
+						for($j=0; $j<$num_fields; $j++) 
+						{
+							$row[$j] = addslashes($row[$j]);
+							$row[$j] = ereg_replace("\n","\\n",$row[$j]);
+							if (isset($row[$j])) { $return.= '"'.$row[$j].'"' ; } else { $return.= '""'; }
+							if ($j<($num_fields-1)) { $return.= ','; }
+						}
+						$return.= ");\n";
+					}
+				}
+				$return.="\n\n\n";
+			}
+			
+			//save file
+			$handle = fopen('yedekler/db-backup-'.time().'-'.(md5(implode(',',$tables))).'.sql','w+');
+			if (fwrite($handle,$return))
+			{
+				if(fclose($handle))
+				{
+					echo 1;
+				}
+			}
+			else
+			{
+				echo 0;
+			}
+		break;
+		
+		case "ayarlarGuncelle_sifresiz":
+			connect_db();
+			
+			$sirket_ismi 	= $_POST['sirket_ismi'];
+			$email 			= $_POST['email'];
+			
+			if (mysql_query("UPDATE ayarlar SET value='$sirket_ismi' WHERE id='1'"))
+			{
+				if (mysql_query("UPDATE ayarlar SET value='$email' WHERE id='7'"))
+				{
+					echo 1;
+				}
+				else
+				{
+					echo 0;
+				}
+			}
+			else
+			{
+				echo 0;
+			}
+		break;
+		
+		case "ayarlarGuncelle_sifreli":
+			connect_db();
+			
+			$sirket_ismi 	= $_POST['sirket_ismi'];
+			$yeni_sifre		= $_POST['yeni_sifre'];
+			$email			= $_POST['email'];
+			
+			if (mysql_query("UPDATE ayarlar SET value='$sirket_ismi' WHERE id='1'"))
+			{
+				if (mysql_query("UPDATE ayarlar SET value='$yeni_sifre' WHERE id='2'"))
+				{
+					if (mysql_query("UPDATE ayarlar SET value='$email' WHERE id='7'"))
+					{
+						echo 1;
+					}
+					else
+					{
+						echo 0;
+					}
+				}
+				else
+				{
+					echo 0;
+				}
+			}
+			else
+			{
+				echo 0;
+			}
+		break;
+		
 	} // SWITCH / CASE end
 	
 
@@ -534,5 +666,14 @@ function timeTR($par)
 	
 }
 
+
+
+//backup system
+/* backup the db OR just a table */
+function backup_tables($host,$user,$pass,$name,$tables = '*')
+{
+	
+	
+}
 	
 ?>

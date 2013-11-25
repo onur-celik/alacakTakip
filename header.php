@@ -6,7 +6,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>Müşteri Takip Programı</title>
+		<title>Müşteri Takip Sistemi</title>
 		<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
 		 
 		<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
@@ -80,6 +80,33 @@
 							<i class="glyphicon glyphicon-plus"></i> Ekle
 						</button>
 					</div>
+					<div id="ayarlar" style="width:400px;">
+						Şirket İsmi : 
+						<input type="text" class="form-control" id="sirket_ismi"/>
+						<br />
+						E-posta : 
+						<input type="text" class="form-control" id="email"/>
+						<br />
+						<table width="100%">
+							<tr>
+								<td>
+									Yeni Şifre : 
+									<input type="password" class="form-control" id="yeni_sifre"/>
+								</td>
+								<td>&nbsp;</td>
+								<td>
+									Yeni Şifre Tekrar: 
+									<input type="password" class="form-control" id="yeni_sifre_tekrar"/>
+								</td>
+							</tr>
+						</table>
+						
+						
+						<br />
+						<button class="btn btn-xs btn-success" onclick="ayarlar.guncelle();">
+							<i class="glyphicon glyphicon-plus"></i> Güncelle
+						</button>
+					</div>
 					';
 				}
 			?>
@@ -108,7 +135,10 @@
 						<button class="btn btn-success btn-sm" onclick="musteri.ekleme_formu();">
 							<i class="glyphicon glyphicon-plus"></i> Müşteri Ekle
 						</button>
-						<button class="btn btn-info btn-sm" onclick="ayarlar();">
+						<button class="btn btn-warning btn-sm" onclick="yedekAl();">
+							<i class="glyphicon glyphicon-hdd"></i> Yedek Al
+						</button>
+						<button class="btn btn-info btn-sm" onclick="ayarlar.form();">
 							<i class="glyphicon glyphicon-wrench"></i> Ayarlar
 						</button>
 						<button class="btn btn-danger btn-sm" onclick="logout();">
@@ -125,6 +155,6 @@
 		
 	<script>
 		$(function(){
-			$('#arama_sonuc, #musteri_ekleme_formu').hide();
+			$('#arama_sonuc, #musteri_ekleme_formu, #ayarlar').hide();
 		});
 	</script>

@@ -27,14 +27,109 @@ function getSahip()
 	
 	$.post(postUrl, params, function(resp)
 	{
-		$('span#sahip').text(resp);
-		$('title').prepend(resp + ' ');
+		resp = $.parseJSON(resp);
+		$('span#sahip').text(resp.sahip);
+		$('title').prepend(resp.sahip + ' ');
+		
+		$('#hidden_sahip').val(resp.sahip);
+		$('#hidden_email').val(resp.email);
 	});
 }
 
-function ayarlar()
+var ayarlar =
 {
-	alert('coming soon');
+	form : function()
+	{
+		$.fancybox.showLoading();
+		$.fancybox( {href : '#ayarlar'} );
+		$('#ayarlar input#sirket_ismi').val($('#hidden_sahip').val());
+		$('#ayarlar input#email').val($('#hidden_email').val());
+	},
+	
+	guncelle : function()
+	{
+		var sirket_ismi 		= $('#sirket_ismi').val();
+		var yeni_sifre 			= $('#yeni_sifre').val();
+		var yeni_sifre_tekrar 	= $('#yeni_sifre_tekrar').val();
+		var email 				= $('#email').val();
+		
+		if (yeni_sifre != '')
+		{
+			if (yeni_sifre != yeni_sifre_tekrar)
+			{
+				$.pnotify({
+				    title	: 'Hata',
+				    text	: 'Şifreler uyuşmuyor!.!',
+				    type	: 'error',
+				    addclass: "stack-bottomright",
+				    stack   : stack_bottomright
+				});
+			}
+			else
+			{
+				var params = 
+				{
+					duty 		: 'ayarlarGuncelle_sifreli',
+					yeni_sifre 	: yeni_sifre,
+					sirket_ismi	: sirket_ismi,
+					email		: email
+				}
+				
+				$.post(postUrl, params, function(resp)
+				{
+					if (resp == 1)
+					{
+						$.pnotify({
+						    title	: 'Başarılı',
+						    text	: 'Bilgiler güncellendi <br /> Lütfen tekrar giriş yapınız!.',
+						    type	: 'success',
+						    addclass: "stack-bottomright",
+						    stack   : stack_bottomright
+						});
+					}
+					setTimeout(function(){
+						logout();
+					},1200);
+				});
+			}
+		}
+		else
+		{
+			var params = 
+			{
+				duty 		: 'ayarlarGuncelle_sifresiz',
+				sirket_ismi	: $('#ayarlar input#sirket_ismi').val(),
+				email		: $('#ayarlar input#email').val()
+			}
+			
+			$.post(postUrl, params, function(resp)
+			{
+				if (resp == 1)
+				{
+					$.pnotify({
+					    title	: 'Başarılı',
+					    text	: 'Bilgiler güncellendi!.',
+					    type	: 'success',
+					    addclass: "stack-bottomright",
+					    stack   : stack_bottomright
+					});
+					setTimeout(function(){
+						location.reload();
+					},1200);
+				}
+				else
+				{
+					$.pnotify({
+					    title	: 'Hata',
+					    text	: 'Güncelleme işleminde bir problem oluştu!.',
+					    type	: 'error',
+					    addclass: "stack-bottomright",
+					    stack   : stack_bottomright
+					});	
+				}
+			});
+		}
+	},
 }
 
 function login()
@@ -65,7 +160,6 @@ function login()
 		}
 		else
 		{	
-			console.log(resp);
 			$.pnotify({
 			    title	: 'Parola Hatalı',
 			    text	: 'Lütfen parolanızı kontrol edip tekrar deneyin!',
@@ -375,19 +469,7 @@ var musteri =
 			aciklama : $('#alacak_ekle #aciklama').val() ,
 			tutar : $('#alacak_ekle #tutar').val()
 		}
-		
-/*
-		var hede1 = new Date(params.tarih);
-		var hede2 = new Date(hede1).getTime()/1000+10800;
-		var hede3 = new Date(hede2);
-		
-		console.log(params.tarih);
-		console.log(hede1);
-		console.log(hede2);
-		console.log(hede3);
-		
-		return false;
-*/
+
 		$.post(postUrl, params, function(resp){
 			if (resp == 1)
 			{	
@@ -702,5 +784,38 @@ function getToplamYapilanIs()
 	{
 		$('span#toplam_yapilan_is').text(resp+' TL');
 		$.fancybox.hideLoading();
+	});
+}
+
+function yedekAl()
+{
+	var params = 
+	{
+		duty : 'backUpDB'	
+	};
+	
+	$.post(postUrl, params, function(resp)
+	{
+		if (resp == 1)
+		{
+			$.pnotify({
+			    title	: 'Başarılı',
+			    text	: "Yedek alma işlemi tamamlandı!..",
+			    type	: 'success',
+			    addclass: "stack-bottomright",
+			    stack   : stack_bottomright
+			});	
+		}
+		else
+		{
+			$.pnotify({
+			    title	: 'Hata!',
+			    text	: "Yedek alma işlemi sırasında bir problem oluştu!..",
+			    type	: 'error',
+			    addclass: "stack-bottomright",
+			    stack   : stack_bottomright
+			});
+		}
+		
 	});
 }

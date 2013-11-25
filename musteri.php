@@ -31,41 +31,45 @@ print_r( getdate() );
 	</script>
 	
 	
-	<div class="row alert alert-info">
-		<div class="col-sm-7 col-lg-7">
-			<span style="font-size:50px; font-weight:900; color:rgba(0,0,0,0.9);" id="UI_isimsoyisim"></span>
-			<br />
-			<strong>Adres : </strong> <span id="UI_adres"></span>
-			<br />
-			<strong>Telefon1 : </strong> <span id="UI_telefon1"></span>
-			<br />
-			<strong>Telefon2 : </strong> <span id="UI_telefon2"></span>
-			<br />
-			<strong>Telefon3 : </strong> <span id="UI_telefon3"></span>
-		</div>
-		<div class="col-sm-5 col-lg-5">
-			<strong>Müşteri ID : </strong> <span id="UI_id"></span>
-			<br />
-			<strong>Hesap Durumu : </strong> <span class="badge" id="UI_hesap_durumu"></span>
-			<br />
-			<br />
-			<button class="btn btn-xs btn-warning" id="UI_btn_alacak_ekle">
-				<i class="glyphicon glyphicon-minus"></i> Alacak Ekle
-			</button>
-			<button class="btn btn-xs btn-success" id="UI_btn_odeme_ekle">
-				<i class="glyphicon glyphicon-plus"></i> Ödeme Ekle
-			</button>
-			<button class="btn btn-xs btn-primary" id="UI_btn_hesap_durumu">
-				<i class="glyphicon glyphicon-ok"></i> Hesabı Aç / Kapat
-			</button>
-			<br />
-			<br />
-			<button class="btn btn-xs btn-default" id="UI_btn_bilgileri_guncelle">
-				<i class="glyphicon glyphicon-pencil"></i> Müşteri Bilgilerini Güncelle
-			</button>
-			<button class="btn btn-xs btn-danger" id="UI_btn_musteri_sil">
-				<i class="glyphicon glyphicon-remove"></i> Müşteriyi Sil
-			</button>
+	<div class="row">
+		<div class="col-sm-12 col-lg-12">
+			<div class="row alert alert-info">		
+				<div class="col-sm-7 col-lg-7">
+					<span style="font-size:50px; font-weight:900; color:rgba(0,0,0,0.9);" id="UI_isimsoyisim"></span>
+					<br />
+					<strong>Adres : </strong> <span id="UI_adres"></span>
+					<br />
+					<strong>Telefon1 : </strong> <span id="UI_telefon1"></span>
+					<br />
+					<strong>Telefon2 : </strong> <span id="UI_telefon2"></span>
+					<br />
+					<strong>Telefon3 : </strong> <span id="UI_telefon3"></span>
+				</div>
+				<div class="col-sm-5 col-lg-5">
+					<strong>Müşteri ID : </strong> <span id="UI_id"></span>
+					<br />
+					<strong>Hesap Durumu : </strong> <span class="badge" id="UI_hesap_durumu"></span>
+					<br />
+					<br />
+					<button class="btn btn-xs btn-warning" id="UI_btn_alacak_ekle">
+						<i class="glyphicon glyphicon-minus"></i> Alacak Ekle
+					</button>
+					<button class="btn btn-xs btn-success" id="UI_btn_odeme_ekle">
+						<i class="glyphicon glyphicon-plus"></i> Ödeme Ekle
+					</button>
+					<button class="btn btn-xs btn-primary" id="UI_btn_hesap_durumu">
+						<i class="glyphicon glyphicon-ok"></i> Hesabı Aç / Kapat
+					</button>
+					<br />
+					<br />
+					<button class="btn btn-xs btn-default" id="UI_btn_bilgileri_guncelle">
+						<i class="glyphicon glyphicon-pencil"></i> Müşteri Bilgilerini Güncelle
+					</button>
+					<button class="btn btn-xs btn-danger" id="UI_btn_musteri_sil">
+						<i class="glyphicon glyphicon-remove"></i> Müşteriyi Sil
+					</button>
+				</div>
+			</div>
 		</div>
 	</div>
 	
@@ -79,7 +83,7 @@ print_r( getdate() );
 	
 	<div class="row">
 		<div class="col-sm-12 col-lg-12 table-responsive">
-			<table class="table table-bordered table-striped table-hover" id="islemler">
+			<table class="table table-bordered table-condensed table-striped table-hover" id="islemler">
 				<thead>
 					<tr>
 						<th>Tarih</th>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 24, 2013 at 08:04 PM
+-- Generation Time: Nov 25, 2013 at 04:27 PM
 -- Server version: 5.1.44
 -- PHP Version: 5.3.1
 
@@ -25,15 +25,20 @@ CREATE TABLE IF NOT EXISTS `ayarlar` (
   `key` varchar(255) COLLATE utf8_turkish_ci NOT NULL,
   `value` varchar(255) COLLATE utf8_turkish_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `ayarlar`
 --
 
 INSERT INTO `ayarlar` (`id`, `key`, `value`) VALUES
-(1, 'sahip', 'onurcelik'),
-(2, 'sifre', '12345');
+(1, 'sahip', 'Onur Çelik'),
+(2, 'sifre', '12345'),
+(3, 'db_adi', 'alacakTakip'),
+(4, 'db_user', 'root'),
+(5, 'db_pass', ''),
+(7, 'email', 'onurcelik@me.com'),
+(6, 'db_host', 'localhost');
 
 -- --------------------------------------------------------
 
